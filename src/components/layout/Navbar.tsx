@@ -19,69 +19,81 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="fixed w-full z-50 backdrop-blur-md bg-white/70 border-b border-white/20 shadow-sm">
-            <div className="container flex items-center justify-between h-20">
-                {/* Logo */}
-                <Link href="/" className="flex items-center gap-2 group">
-                    <div className="bg-[var(--color-sea-blue)] p-1.5 rounded-lg group-hover:rotate-12 transition-transform">
-                        <Waves className="text-white" size={24} />
+        <nav className="fixed w-full z-[100] px-4 md:px-0 top-6">
+            <div className="container p-0">
+                <div className="glass-v2 rounded-full px-6 py-4 flex items-center justify-between border-white/30">
+                    {/* Logo */}
+                    <Link href="/" className="flex items-center gap-3 group">
+                        <div className="bg-[var(--color-sea-blue)] p-2 rounded-xl group-hover:rotate-12 transition-transform shadow-lg">
+                            <Waves className="text-white" size={24} />
+                        </div>
+                        <div className="flex flex-col leading-none">
+                            <span className="text-lg font-black tracking-tighter text-[var(--color-sea-deep)]">
+                                DAHAB<span className="text-[var(--color-sand-gold)]">RENTAL</span>
+                            </span>
+                            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">Red Sea Base</span>
+                        </div>
+                    </Link>
+
+                    {/* Desktop Nav */}
+                    <div className="hidden md:flex items-center gap-8">
+                        <nav className="flex items-center gap-6 mr-6 border-r border-gray-200 pr-8">
+                            <Link href="#rooms" className="text-sm font-bold text-gray-600 hover:text-[var(--color-sea-blue)] transition-colors tracking-tight">
+                                {lang === "EN" ? "Rooms" : "الغرف"}
+                            </Link>
+                            <Link href="#book" className="text-sm font-bold text-gray-600 hover:text-[var(--color-sea-blue)] transition-colors tracking-tight">
+                                {lang === "EN" ? "Book Now" : "احجز الآن"}
+                            </Link>
+                        </nav>
+
+                        <div className="flex items-center gap-4">
+                            <button
+                                onClick={toggleLang}
+                                className="flex items-center gap-2 p-1.5 pr-3 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-black hover:bg-white transition-colors text-gray-500"
+                            >
+                                <div className="bg-[var(--color-sea-blue)] text-white p-1 rounded-full"><Globe size={12} /></div>
+                                {lang}
+                            </button>
+
+                            <Link href="/admin" className="px-6 py-2.5 bg-[var(--color-sea-deep)] text-white rounded-full text-xs font-bold hover:bg-[var(--color-sea-blue)] transition-colors shadow-md">
+                                {lang === "EN" ? "Owner Access" : "دخول الملوك"}
+                            </Link>
+                        </div>
                     </div>
-                    <span className="text-xl font-black tracking-tighter text-[var(--color-sea-blue)]">
-                        DAHAB<span className="text-[var(--color-sand-gold)]">RENTAL</span>
-                    </span>
-                </Link>
 
-                {/* Desktop Nav */}
-                <div className="hidden md:flex items-center gap-8">
-                    <Link href="#rooms" className="text-sm font-bold text-gray-700 hover:text-[var(--color-sea-blue)] transition-colors uppercase tracking-widest">
-                        {lang === "EN" ? "Rooms" : "الغرف"}
-                    </Link>
-                    <Link href="#book" className="text-sm font-bold text-gray-700 hover:text-[var(--color-sea-blue)] transition-colors uppercase tracking-widest">
-                        {lang === "EN" ? "Book Now" : "احجز الآن"}
-                    </Link>
-
+                    {/* Mobile Menu Button */}
                     <button
-                        onClick={toggleLang}
-                        className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-full text-xs font-bold hover:bg-gray-50 transition-colors"
+                        className="md:hidden p-2 text-[var(--color-sea-deep)]"
+                        onClick={() => setIsOpen(!isOpen)}
+                        aria-label="Toggle menu"
                     >
-                        <Globe size={14} />
-                        {lang}
+                        {isOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
-
-                    <Link href="/admin" className="btn-primary text-xs py-2 px-6 shadow-md">
-                        {lang === "EN" ? "Owner Login" : "دخول الملاك"}
-                    </Link>
                 </div>
-
-                {/* Mobile Menu Button */}
-                <button
-                    className="md:hidden p-2 text-gray-600"
-                    onClick={() => setIsOpen(!isOpen)}
-                    aria-label="Toggle menu"
-                >
-                    {isOpen ? <X size={28} /> : <Menu size={28} />}
-                </button>
             </div>
 
             {/* Mobile Menu */}
             {isOpen && (
-                <div className="md:hidden bg-white border-b border-gray-100 p-6 space-y-4 animate-in slide-in-from-top-2 duration-200">
-                    <Link href="#rooms" onClick={() => setIsOpen(false)} className="block text-lg font-bold text-gray-800">
-                        {lang === "EN" ? "Rooms" : "الغرف"}
-                    </Link>
-                    <Link href="#book" onClick={() => setIsOpen(false)} className="block text-lg font-bold text-gray-800">
-                        {lang === "EN" ? "Book Now" : "احجز الآن"}
-                    </Link>
-                    <button
-                        onClick={() => { toggleLang(); setIsOpen(false); }}
-                        className="flex items-center gap-2 w-full text-left text-lg font-bold text-gray-800"
-                    >
-                        <Globe size={20} />
-                        Switch to {lang === "EN" ? "Arabic" : "English"}
-                    </button>
-                    <Link href="/admin" className="btn-primary inline-block w-full text-center py-3">
-                        {lang === "EN" ? "Owner Login" : "دخول الملاك"}
-                    </Link>
+                <div className="container p-0 mt-4">
+                    <div className="glass-v2 rounded-[var(--radius-premium)] p-8 space-y-6 animate-in slide-in-from-top-4 duration-300">
+                        <Link href="#rooms" onClick={() => setIsOpen(false)} className="block text-2xl font-black text-[var(--color-sea-deep)]">
+                            {lang === "EN" ? "The Rooms" : "الغرف"}
+                        </Link>
+                        <Link href="#book" onClick={() => setIsOpen(false)} className="block text-2xl font-black text-[var(--color-sea-deep)]">
+                            {lang === "EN" ? "Start Booking" : "احجز الآن"}
+                        </Link>
+                        <button
+                            onClick={() => { toggleLang(); setIsOpen(false); }}
+                            className="flex items-center gap-3 w-full text-left text-xl font-bold text-[var(--color-sea-blue)]"
+                        >
+                            <Globe size={24} />
+                            Translate to {lang === "EN" ? "Arabic" : "English"}
+                        </button>
+                        <hr className="border-gray-100" />
+                        <Link href="/admin" className="btn-premium w-full justify-center py-4">
+                            {lang === "EN" ? "Owner Dashboard" : "دخول الملاك"}
+                        </Link>
+                    </div>
                 </div>
             )}
         </nav>

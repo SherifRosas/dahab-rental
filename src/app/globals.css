@@ -2,25 +2,48 @@
   /* Dahab Palette */
   --color-sea-blue: #0A4D68;
   --color-sea-light: #0093E9;
-  --color-sand-gold: #DCAE53;
-  --color-sand-light: #F9F1E6;
+  /* Dahab Premium Palette: Deep Sea & Desert Sand */
+  --color-sea-deep: #002B4E;
+  /* Midnight Blue (Red Sea Depth) */
+  --color-sea-blue: #0077b6;
+  /* Turquoise (Surface) */
+  --color-sea-light: #ade8f4;
+  /* Shallow Water */
+  --color-sand-gold: #c9a227;
+  /* Dahab Sand */
+  --color-coral-pink: #ff7f50;
+  /* Coral Reef accent */
   --color-text-dark: #1A1A1A;
+  /* Kept from original, not in new palette */
   --color-text-light: #FDFCF6;
-  --color-glass-bg: rgba(255, 255, 255, 0.1);
-  --color-glass-border: rgba(255, 255, 255, 0.2);
+  /* Kept from original, not in new palette */
+  --color-glass-bg: rgba(255, 255, 255, 0.6);
+  --color-glass-border: rgba(255, 255, 255, 0.4);
+
+  --shadow-premium: 0 20px 40px rgba(0, 43, 78, 0.1);
+  --radius-premium: 24px;
+  --transition-fluid: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Fonts */
   --font-heading: system-ui, -apple-system, sans-serif;
   --font-body: system-ui, -apple-system, sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
-  background-color: var(--color-sand-light);
-  color: var(--color-text-dark);
+  color: var(--color-sea-deep);
+  background: #fdfdfd;
   overflow-x: hidden;
+  line-height: 1.6;
 }
 
 /* Glassmorphism Utility */
@@ -33,11 +56,29 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
+/* Glassmorphism 2.0 */
+.glass-v2 {
+  background: rgba(255, 255, 255, 0.4);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid var(--color-glass-border);
+  box-shadow: var(--shadow-premium);
+}
+
+.glass-v2-dark {
+  background: rgba(0, 43, 78, 0.6);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
 /* Utilities */
+/* Fluid Layout */
 .container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 2rem;
 }
 
 .btn-primary {

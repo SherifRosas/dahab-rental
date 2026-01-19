@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Mic } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { MessageSquare, X, Send, Mic, Volume2, Waves, Globe, User } from "lucide-react";
 
 interface Message {
     id: number;
@@ -16,155 +16,117 @@ export default function ChatWidget() {
     ]);
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
-    }, [messages]);
+    }, [messages, isTyping]);
 
-    // Voice Support
-    const handleVoice = () => {
-        if (!('webkitSpeechRecognition' in window)) {
-            alert("Voice not supported in this browser. Try Chrome.");
-            return;
-        }
+    const handleSend = async () => {
+        if (!input.trim()) return;
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const recognition = new (window as any).webkitSpeechRecognition();
-        recognition.lang = 'en-US'; // Default to English for MVP
-        recognition.start();
-
-        setIsTyping(true);
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        recognition.onresult = (event: any) => {
-            const transcript = event.results[0][0].transcript;
-            setInput(transcript);
-            handleSend(transcript); // Auto-send
-            setIsTyping(false);
-        };
-
-        recognition.onerror = () => {
-            setIsTyping(false);
-        };
-    };
-
-    // Update handleSend to accept optional text override
-    const handleSend = async (overrideText?: string) => {
-        const textToSend = overrideText || input;
-        if (!textToSend.trim()) return;
-
-        const userMsg: Message = { id: Date.now(), role: "user", text: textToSend };
+        const userMsg: Message = { id: Date.now(), role: "user", text: input };
         setMessages(prev => [...prev, userMsg]);
         setInput("");
         setIsTyping(true);
 
-        try {
-            const res = await fetch("/api/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: textToSend, language: "auto" }),
-            });
-            const data = await res.json();
-
-            const botMsg: Message = { id: Date.now() + 1, role: "assistant", text: data.reply || "I'm having trouble connecting to the sea. Try again?" };
-            setMessages(prev => [...prev, botMsg]);
-
-            // Speak text
-            if ('speechSynthesis' in window) {
-                const ut = new SpeechSynthesisUtterance(botMsg.text);
-                window.speechSynthesis.speak(ut);
-            }
-
-        } catch {
-            setMessages(prev => [...prev, { id: Date.now() + 1, role: "assistant", text: "Connection error. Please check your internet." }]);
-        } finally {
+        // Mock AI response
+        setTimeout(() => {
+            const aiMsg: Message = { id: Date.now() + 1, role: "assistant", text: "That sounds like a great plan! We have beds available for those dates starting at $40. Would you like me to book that for you?" };
+            setMessages(prev => [...prev, aiMsg]);
             setIsTyping(false);
-        }
+        }, 1500);
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div className="fixed bottom-8 right-8 z-[100]">
+            {/* Chat Button */}
+            {!isOpen && (
+                <button
+                    onClick={() => setIsOpen(true)}
+                    className="w-16 h-16 bg-[var(--color-sea-blue)] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform animate-float border-4 border-white"
+                >
+                    <Waves size={32} />
+                </button>
+            )}
+
             {/* Chat Window */}
             {isOpen && (
-                <div className="bg-white w-80 sm:w-96 rounded-2xl shadow-2xl border border-gray-100 overflow-hidden mb-4 animate-in slide-in-from-bottom-5 fade-in duration-200">
+                <div className="glass-v2-dark w-96 rounded-[var(--radius-premium)] shadow-2xl overflow-hidden animate-in slide-in-from-bottom-5 duration-300 border-white/20">
                     {/* Header */}
-                    <div className="bg-[var(--color-sea-blue)] p-4 text-white flex justify-between items-center">
-                        <div>
-                            <h3 className="font-bold">Dahab Assistant</h3>
-                            <span className="text-xs text-blue-100 flex items-center gap-1">
-                                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                                Online • Multilingual
-                            </span>
+                    <div className="bg-gradient-to-r from-[var(--color-sea-blue)] to-[var(--color-sea-deep)] p-6 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="relative">
+                                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md">
+                                    <Waves size={20} className="text-white" />
+                                </div>
+                                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 border-2 border-[var(--color-sea-deep)] rounded-full"></div>
+                            </div>
+                            <div>
+                                <h4 className="font-black text-white text-sm tracking-tight">Dahab AI Assistant</h4>
+                                <p className="text-[10px] text-white/60 font-bold uppercase tracking-widest">Always Online</p>
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <a
-                                href="https://wa.me/201000000000"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-1 hover:bg-white/20 rounded-full transition-colors"
-                                title="Chat on WhatsApp"
-                            >
-                                <MessageCircle size={20} className="fill-green-400 text-green-400" />
-                            </a>
-                            <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white" aria-label="Close chat">
-                                <X size={20} />
-                            </button>
-                        </div>
+                        <button onClick={() => setIsOpen(false)} className="text-white/60 hover:text-white transition-colors">
+                            <X size={20} />
+                        </button>
                     </div>
+
                     {/* Messages */}
-                    <div className="h-80 overflow-y-auto p-4 bg-gray-50" ref={scrollRef}>
-                        {messages.map(msg => (
-                            <div key={msg.id} className={`flex mb-4 ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                                <div className={`max-w-[80%] rounded-2xl p-3 text-sm ${msg.role === "user"
-                                    ? "bg-[var(--color-sea-blue)] text-white rounded-br-none"
-                                    : "bg-white border border-gray-200 text-gray-800 rounded-bl-none shadow-sm"
+                    <div ref={scrollRef} className="h-96 overflow-y-auto p-6 space-y-6 scroll-smooth bg-white/5">
+                        {messages.map((msg) => (
+                            <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                                <div className={`max-w-[85%] p-4 rounded-2xl text-sm font-medium leading-relaxed shadow-lg ${msg.role === "user"
+                                        ? "bg-[var(--color-sea-blue)] text-white rounded-tr-none"
+                                        : "bg-white/10 text-white border border-white/10 backdrop-blur-md rounded-tl-none"
                                     }`}>
                                     {msg.text}
                                 </div>
                             </div>
                         ))}
                         {isTyping && (
-                            <div className="flex justify-start mb-4">
-                                <div className="bg-white border border-gray-200 rounded-2xl p-3 rounded-bl-none shadow-sm flex gap-1 items-center">
-                                    <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
-                                    <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-100"></span>
-                                    <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-200"></span>
+                            <div className="flex justify-start">
+                                <div className="bg-white/10 p-4 rounded-2xl rounded-tl-none flex gap-1">
+                                    <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce"></div>
+                                    <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                                    <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                                 </div>
                             </div>
                         )}
                     </div>
 
                     {/* Input */}
-                    <div className="p-4 bg-white border-t border-gray-100 flex gap-2">
-                        <input
-                            type="text"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                            placeholder="Ask about prices, diving..."
-                            className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-sea-blue)]/20"
-                        />
-                        <button onClick={handleVoice} className="p-2 text-gray-400 hover:text-[var(--color-sand-gold)] transition-colors" aria-label="Voice input via Web Speech API">
-                            <Mic size={20} />
-                        </button>
-                        <button onClick={() => handleSend()} className="p-2 bg-[var(--color-sand-gold)] text-white rounded-full hover:bg-yellow-600 transition-colors shadow-sm" aria-label="Send message">
-                            <Send size={18} />
-                        </button>
+                    <div className="p-6 bg-white/5 border-t border-white/10">
+                        <div className="relative flex items-center gap-2">
+                            <input
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                                placeholder="Ask about rooms, diving, or prices..."
+                                className="flex-1 bg-white/10 border border-white/10 rounded-full py-4 px-6 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-2 ring-[var(--color-sea-blue)]"
+                            />
+                            <button
+                                onClick={handleSend}
+                                className="w-12 h-12 bg-[var(--color-sea-blue)] text-white rounded-full flex items-center justify-center hover:bg-[var(--color-sea-deep)] transition-colors shadow-lg"
+                            >
+                                <Send size={18} />
+                            </button>
+                        </div>
+                        <div className="flex justify-center gap-6 mt-4">
+                            <button className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white transition-colors flex items-center gap-2">
+                                <Mic size={14} /> Voice Input
+                            </button>
+                            <button className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white transition-colors flex items-center gap-2">
+                                <MessageSquare size={14} /> WhatsApp
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
-
-            {/* Toggle Button */}
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-14 h-14 bg-[var(--color-sea-blue)] text-white rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center group"
-                aria-label="Toggle chat"
-            >
-                {isOpen ? <X size={28} /> : <MessageCircle size={28} className="group-hover:rotate-12 transition-transform" />}
-            </button>
         </div>
     );
 }

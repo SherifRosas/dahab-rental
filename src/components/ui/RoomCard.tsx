@@ -1,56 +1,64 @@
-import { User, BedDouble } from "lucide-react";
+"use client";
+
+import { User, Bed } from "lucide-react";
 
 interface RoomCardProps {
     title: string;
     price: number;
     capacity: number;
     description: string;
-    type: 'shared' | 'private' | 'multi';
+    image?: string;
     onSelect?: () => void;
 }
 
-export default function RoomCard({ title, price, capacity, description, type, onSelect }: RoomCardProps) {
+export default function RoomCard({ title, price, capacity, description, image, onSelect }: RoomCardProps) {
     return (
-        <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden flex flex-col">
-            <div className="h-48 bg-gray-200 relative">
-                {/* Placeholder Image */}
-                <div className="absolute inset-0 flex items-center justify-center text-gray-400 bg-gray-100">
-                    Image Placeholder
-                </div>
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-[var(--color-sea-blue)] uppercase tracking-wider">
-                    {type}
+        <div className="group glass-v2 rounded-[var(--radius-premium)] overflow-hidden hover-lift flex flex-col h-full border-white/20">
+            {/* Background Image with Overlay */}
+            <div className="relative h-64 overflow-hidden">
+                <img
+                    src={image || "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"}
+                    alt={title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-sea-deep)]/80 via-transparent to-transparent"></div>
+                <div className="absolute bottom-4 left-6">
+                    <span className="bg-[var(--color-sand-gold)] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                        Dahab Selection
+                    </span>
                 </div>
             </div>
 
-            <div className="p-6 flex-1 flex flex-col">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
-                <p className="text-gray-500 text-sm mb-4 flex-1">{description}</p>
-
-                <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
-                    <div className="flex items-center gap-1">
-                        <User size={16} />
-                        <span>Max {capacity}</span>
+            <div className="p-8 flex-1 flex flex-col">
+                <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-2xl font-black text-[var(--color-sea-deep)] leading-tight">{title}</h3>
+                    <div className="text-right">
+                        <span className="text-3xl font-black text-[var(--color-sea-blue)]">${price}</span>
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Per Night</p>
                     </div>
-                    {type === 'shared' && (
-                        <div className="flex items-center gap-1">
-                            <BedDouble size={16} />
-                            <span>Bunk Bed</span>
-                        </div>
-                    )}
                 </div>
 
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
-                    <div>
-                        <span className="text-2xl font-bold text-[var(--color-sea-blue)]">${price}</span>
-                        <span className="text-gray-400 text-xs"> / night</span>
+                <p className="text-gray-500 text-sm mb-8 line-clamp-2 font-medium leading-relaxed">
+                    {description}
+                </p>
+
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                    <div className="flex items-center gap-2 text-gray-600 bg-gray-50 p-2 rounded-xl border border-gray-100">
+                        <User size={16} className="text-[var(--color-sea-blue)]" />
+                        <span className="text-xs font-bold">{capacity} People</span>
                     </div>
-                    <button
-                        onClick={onSelect}
-                        className="btn-secondary text-sm px-6 py-2 hover:bg-[var(--color-sea-blue)] hover:text-white"
-                    >
-                        Select
-                    </button>
+                    <div className="flex items-center gap-2 text-gray-600 bg-gray-50 p-2 rounded-xl border border-gray-100">
+                        <Bed size={16} className="text-[var(--color-sea-blue)]" />
+                        <span className="text-xs font-bold">Premium Bed</span>
+                    </div>
                 </div>
+
+                <button
+                    onClick={onSelect}
+                    className="w-full btn-premium py-4 justify-center group-hover:shadow-2xl transition-all"
+                >
+                    Check Availability
+                </button>
             </div>
         </div>
     );
