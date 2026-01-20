@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X, Cpu, Globe, Activity } from "lucide-react";
+import { Terminal, Globe, LayoutGrid, X, Cpu, Activity } from "lucide-react";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -25,83 +25,76 @@ export default function Navbar() {
     };
 
     return (
-        <nav className={`fixed w-full z-[100] transition-all duration-300 ${scrolled ? 'bg-black/90 backdrop-blur-md py-3 border-b border-cyan-500/20' : 'bg-transparent py-6'}`}>
+        <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-slate-950/80 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent py-8'}`}>
             <div className="container flex items-center justify-between">
 
-                {/* Tech Logo */}
-                <Link href="/" className="flex items-center gap-4 group">
-                    <div className="relative">
-                        <div className="w-10 h-10 border-2 border-cyan-400 flex items-center justify-center rotate-45 group-hover:rotate-180 transition-all duration-700 bg-cyan-400/10">
-                            <Cpu size={20} className="text-cyan-400 -rotate-45 group-hover:-rotate-180 transition-all duration-700" />
-                        </div>
+                {/* Brand Terminal */}
+                <Link href="/" className="flex items-center gap-4 group shrink-0">
+                    <div className="w-10 h-10 bg-cyan-400 text-slate-950 flex items-center justify-center">
+                        <Cpu size={20} className="group-hover:rotate-90 transition-transform duration-500" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-xl font-black tracking-tighter text-white font-mono flex items-center">
-                            SYSTEM<span className="text-cyan-400">.DAHAB</span>
+                        <span className="text-xl font-black tracking-tight text-white leading-none">
+                            DAHAB<span className="text-cyan-400">.SYS</span>
                         </span>
-                        <div className="flex items-center gap-2">
-                            <div className="status-glow"></div>
-                            <span className="text-[9px] font-bold text-cyan-400/60 uppercase tracking-[0.2em] font-mono">Diver_Node_Active</span>
+                        <div className="flex items-center gap-2 mt-1">
+                            <div className="status-pip animate-pulse"></div>
+                            <span className="text-tech opacity-50">NODE_01_ACTIVE</span>
                         </div>
                     </div>
                 </Link>
 
-                {/* Desktop Interface */}
+                {/* Global Controls */}
                 <div className="hidden md:flex items-center gap-10">
-                    <div className="flex items-center gap-8 font-mono text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                        <Link href="#rooms" className="hover:text-cyan-400 transition-colors flex items-center gap-2">
-                            <span className="opacity-30">01_</span> {lang === "EN" ? "Units" : "الغرف"}
-                        </Link>
-                        <Link href="#book" className="hover:text-cyan-400 transition-colors flex items-center gap-2">
-                            <span className="opacity-30">02_</span> {lang === "EN" ? "Reserve" : "حجز"}
-                        </Link>
-                    </div>
+                    <nav className="flex items-center gap-8 text-tech !opacity-70">
+                        <Link href="#rooms" className="hover:text-white transition-colors">DIRECTORY.DIR</Link>
+                        <Link href="#book" className="hover:text-white transition-colors">ALLOCATE.SH</Link>
+                    </nav>
 
-                    <div className="flex items-center gap-4 border-l border-white/10 pl-10">
+                    <div className="flex items-center gap-6 border-l border-white/10 pl-10">
                         <button
                             onClick={toggleLang}
-                            className="px-4 py-1.5 border border-cyan-400/30 text-cyan-400 font-mono text-[10px] font-black uppercase hover:bg-cyan-400/10 transition-colors"
+                            className="flex items-center gap-2 text-tech opacity-50 hover:opacity-100 transition-opacity"
                         >
-                            {lang}
+                            <Globe size={14} /> [{lang}]
                         </button>
-
-                        <Link href="/admin" className="btn-tech px-6 py-2.5">
-                            {lang === "EN" ? "ADMIN_SYS" : "دخول النظام"}
+                        <Link href="/admin" className="btn-pro !px-6 !py-3">
+                            ADMIN_AUTH <Activity size={14} />
                         </Link>
                     </div>
                 </div>
 
-                {/* Mobile Trigger */}
+                {/* Mobile Input Trigger */}
                 <button
-                    className="md:hidden p-2 text-cyan-400 border border-cyan-400/20 bg-cyan-400/5"
                     onClick={() => setIsOpen(!isOpen)}
+                    className="md:hidden w-10 h-10 border border-white/10 flex items-center justify-center text-cyan-400"
                 >
-                    {isOpen ? <X size={24} /> : <Menu size={24} />}
+                    {isOpen ? <X size={20} /> : <LayoutGrid size={20} />}
                 </button>
             </div>
 
-            {/* Mobile Terminal Menu */}
+            {/* Terminal Overlay */}
             {isOpen && (
-                <div className="fixed inset-0 top-[70px] bg-black/95 z-50 p-6 flex flex-col gap-8 animate-in fade-in duration-200">
-                    <div className="space-y-4">
-                        <p className="font-mono text-[10px] text-cyan-400/40 uppercase tracking-[0.5em] mb-8">Accessing_Directory...</p>
-                        <Link href="#rooms" onClick={() => setIsOpen(false)} className="block text-4xl font-mono font-black text-white hover:text-cyan-400 tracking-tighter">
-                            UNITS.EXE
-                        </Link>
-                        <Link href="#book" onClick={() => setIsOpen(false)} className="block text-4xl font-mono font-black text-white hover:text-cyan-400 tracking-tighter">
-                            RESERVE.SYS
-                        </Link>
+                <div className="mobile-overlay flex flex-col gap-12 animate-in fade-in slide-in-from-top-4 duration-300">
+                    <div className="space-y-2">
+                        <span className="text-tech">Terminal_Session_Initialised</span>
+                        <div className="h-px bg-white/5 w-full"></div>
+                    </div>
+
+                    <div className="space-y-8">
+                        <Link href="#rooms" onClick={() => setIsOpen(false)} className="block text-5xl font-black text-white hover:text-cyan-400 tracking-tighter">UNITS.DIR</Link>
+                        <Link href="#book" onClick={() => setIsOpen(false)} className="block text-5xl font-black text-white hover:text-cyan-400 tracking-tighter">RESERVE.BAT</Link>
                     </div>
 
                     <div className="mt-auto space-y-4">
                         <button
                             onClick={() => { toggleLang(); setIsOpen(false); }}
-                            className="w-full py-4 border border-cyan-400/20 text-cyan-400 font-mono text-sm font-black"
+                            className="w-full py-5 border border-white/5 text-tech"
                         >
-                            SWITCH_LANG: {lang === "EN" ? "ARABIC" : "ENGLISH"}
+                            SWAP_LANG: {lang === "EN" ? "ARABIC" : "ENGLISH"}
                         </button>
-                        <Link href="/admin" className="btn-tech w-full justify-center py-4">
-                            AUTHENTICATE_OWNER
+                        <Link href="/admin" className="btn-pro w-full justify-center py-5">
+                            ACCESS_ROOT_SYSTEM
                         </Link>
                     </div>
                 </div>

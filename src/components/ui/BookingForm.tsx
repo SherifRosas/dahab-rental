@@ -1,126 +1,109 @@
 "use client";
 
 import { useState } from "react";
-import { Terminal, Shield, Cpu, Activity, Search, AlertCircle } from "lucide-react";
+import { Terminal, ShieldCheck, Activity, Search, AlertCircle, Cpu } from "lucide-react";
 
 export default function BookingForm() {
-    const [activeTab, setActiveTab] = useState('DATES');
-
     return (
-        <section id="book" className="py-24 bg-black border-t border-white/5">
-            <div className="container">
-                <div className="max-w-5xl mx-auto bg-slate-950 border border-slate-800 shadow-[0_0_50px_rgba(0,0,0,1)]">
+        <section id="book" className="py-24 bg-slate-950 relative overflow-hidden">
+            <div className="absolute inset-0 hud-grid opacity-10"></div>
 
-                    {/* Module Header */}
-                    <div className="flex items-center justify-between p-4 border-b border-slate-800 bg-slate-900/50">
-                        <div className="flex items-center gap-3">
+            <div className="container relative z-10">
+                <div className="max-w-6xl mx-auto card-tech bg-slate-900/40">
+
+                    {/* Section Header */}
+                    <div className="flex items-center justify-between p-6 border-b border-white/5 bg-slate-950/50">
+                        <div className="flex items-center gap-4">
                             <Terminal size={18} className="text-cyan-400" />
-                            <span className="font-mono text-[11px] font-black text-white tracking-[0.2em]">BOOKING_MOD_V.2.0</span>
+                            <div>
+                                <h3 className="text-white font-mono font-black text-sm tracking-tight leading-none">ALLOCATION_MODULE_V4</h3>
+                                <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-1">Status: Authorised // Encrypted_Link: Active</p>
+                            </div>
                         </div>
-                        <div className="flex gap-1">
-                            <div className="w-2 h-2 rounded-full bg-red-500/50"></div>
-                            <div className="w-2 h-2 rounded-full bg-yellow-500/50"></div>
-                            <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                        <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-cyan-400/10 border border-cyan-400/20">
+                            <Activity size={12} className="text-cyan-400" />
+                            <span className="text-tech !text-[8px]">PROT_STABLE</span>
                         </div>
                     </div>
 
-                    {/* Tabs */}
-                    <div className="flex border-b border-slate-800">
-                        {['DATES', 'ALLOCATION', 'SECURITY'].map(tab => (
-                            <button
-                                key={tab}
-                                className={`flex-1 py-4 font-mono text-[10px] font-black tracking-widest transition-all ${activeTab === tab ? 'text-cyan-400 bg-cyan-400/5 border-b-2 border-cyan-400' : 'text-slate-600'}`}
-                                onClick={() => setActiveTab(tab)}
-                            >
-                                [{tab}]
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-px bg-white/5">
+
+                        {/* Parameter Input Area */}
+                        <div className="lg:col-span-8 p-8 md:p-12 space-y-10 bg-slate-900/20">
+                            <div className="space-y-4">
+                                <span className="text-tech opacity-40">Require_Module_Input</span>
+                                <h2 className="text-4xl font-black text-white tracking-tighter">INITIALIZE_PARAM.</h2>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="space-y-3">
+                                    <label className="text-tech opacity-60 flex items-center gap-2">
+                                        <Activity size={10} /> Sequence_Start
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="w-full bg-slate-950 border border-white/10 p-5 font-mono text-sm text-cyan-400 outline-none focus:border-cyan-400/50 transition-colors"
+                                    />
+                                </div>
+                                <div className="space-y-3">
+                                    <label className="text-tech opacity-60 flex items-center gap-2">
+                                        <Activity size={10} /> Sequence_End
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="w-full bg-slate-950 border border-white/10 p-5 font-mono text-sm text-cyan-400 outline-none focus:border-cyan-400/50 transition-colors"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="p-6 bg-red-500/5 border border-red-500/10 flex items-start gap-4">
+                                <AlertCircle className="text-red-500 shrink-0 mt-1" size={18} />
+                                <div className="font-mono text-[10px] leading-relaxed">
+                                    <p className="text-red-500 font-black mb-1">SYSTEM_POLICY_EXCEPTION:</p>
+                                    <p className="text-slate-400">50%_DEPOSIT_IS_REQUIRED_TO_COMMIT_THIS_SEQUENCE. FAILURE_TO_PAY_WILL_RESULT_IN_ALLOCATION_TERMINATION.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Data Output Matrix */}
+                        <div className="lg:col-span-4 p-8 md:p-12 bg-slate-950 space-y-12 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+                                <Cpu size={120} className="text-cyan-400" />
+                            </div>
+
+                            <div className="space-y-2">
+                                <p className="text-tech opacity-40">Projected_Budget_Out</p>
+                                <div className="flex items-baseline gap-2">
+                                    <span className="text-6xl font-black text-white font-mono">$00</span>
+                                    <span className="text-xl font-black text-cyan-400 font-mono">.00</span>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4 font-mono text-[10px] text-slate-500">
+                                <div className="flex justify-between border-b border-white/5 pb-2">
+                                    <span>RESERVE_BASE</span>
+                                    <span className="text-white">$0.00</span>
+                                </div>
+                                <div className="flex justify-between border-b border-white/5 pb-2">
+                                    <span>NODE_FEE_V4</span>
+                                    <span className="text-white">$0.00</span>
+                                </div>
+                                <div className="flex justify-between items-center text-cyan-400 pt-2 font-black">
+                                    <span>COMMITMENT_DEP(50%)</span>
+                                    <span className="text-lg">$0.00</span>
+                                </div>
+                            </div>
+
+                            <button className="btn-pro w-full justify-center !py-6 !text-base">
+                                EXECUTE_ALLOCATION <Search size={22} />
                             </button>
-                        ))}
-                    </div>
 
-                    <div className="p-8 md:p-16">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-
-                            {/* Input Vector */}
-                            <div className="lg:col-span-7 space-y-10">
-                                <div className="space-y-2">
-                                    <p className="font-mono text-[10px] text-cyan-400 uppercase tracking-widest">User_Input_Required:</p>
-                                    <h3 className="text-4xl font-mono font-black text-white">INITIALIZE_RESERVATION</h3>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-3">
-                                        <label className="font-mono text-[9px] text-slate-500 uppercase flex items-center gap-2">
-                                            <Activity size={10} /> Check_In_Sequence
-                                        </label>
-                                        <input
-                                            type="date"
-                                            className="w-full bg-black border border-slate-800 p-4 font-mono text-sm text-cyan-400 outline-none focus:border-cyan-400 transition-colors"
-                                        />
-                                    </div>
-                                    <div className="space-y-3">
-                                        <label className="font-mono text-[9px] text-slate-500 uppercase flex items-center gap-2">
-                                            <Activity size={10} /> Check_Out_Sequence
-                                        </label>
-                                        <input
-                                            type="date"
-                                            className="w-full bg-black border border-slate-800 p-4 font-mono text-sm text-cyan-400 outline-none focus:border-cyan-400 transition-colors"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="bg-red-500/5 border border-red-500/20 p-4 flex items-start gap-4">
-                                    <AlertCircle className="text-red-500 shrink-0" size={20} />
-                                    <div className="font-mono text-[10px] leading-relaxed">
-                                        <p className="text-red-500 font-bold mb-1">SYSTEM_POLICY:</p>
-                                        <p className="text-slate-500">50%_DEPOSIT_REQUIRED_TO_AUTHENTICATE_BOOKING. FINAL_SETTLEMENT_REQUIRED_UPON_ARRIVAL.</p>
-                                    </div>
-                                </div>
+                            <div className="flex items-center justify-center gap-3">
+                                <ShieldCheck size={16} className="text-slate-800" />
+                                <span className="text-tech !opacity-20">Secure_Node_Connection_Established</span>
                             </div>
-
-                            {/* Price Output */}
-                            <div className="lg:col-span-5">
-                                <div className="bg-slate-900 border border-slate-800 p-8 space-y-8 relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 p-2 opacity-5">
-                                        <Cpu size={120} className="text-cyan-400" />
-                                    </div>
-
-                                    <div className="space-y-1">
-                                        <p className="font-mono text-[10px] text-cyan-400/50 uppercase">Calculation_Output:</p>
-                                        <div className="flex items-baseline gap-2">
-                                            <span className="text-5xl font-mono font-black text-white">$00</span>
-                                            <span className="text-xl font-mono text-cyan-400">.00</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-4 font-mono text-[10px] text-slate-400">
-                                        <div className="flex justify-between border-b border-white/5 pb-2">
-                                            <span>SYS_FEE_B1</span>
-                                            <span className="text-white">$0.00</span>
-                                        </div>
-                                        <div className="flex justify-between border-b border-white/5 pb-2">
-                                            <span>TAX_NODE</span>
-                                            <span className="text-white">0%_PREVIEW</span>
-                                        </div>
-                                    </div>
-
-                                    <button className="btn-tech w-full py-5 text-lg justify-center mt-6">
-                                        EXECUTE_ORDER <Search size={20} className="ml-2" />
-                                    </button>
-
-                                    <div className="mt-6 flex items-center justify-center gap-2">
-                                        <Shield size={12} className="text-green-500" />
-                                        <span className="font-mono text-[8px] text-slate-500 uppercase">SECURE_SSL_PROTOCOL_ACTIVE</span>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
-                    </div>
 
-                    {/* Module Footer */}
-                    <div className="p-3 bg-cyan-400/5 flex justify-between items-center border-t border-slate-800">
-                        <span className="font-mono text-[8px] text-cyan-400/30 uppercase tracking-[0.4em]">Node: Dahab_Lighthouse // Status: Ready</span>
-                        <span className="font-mono text-[8px] text-slate-700">01001001 01001111 01010011</span>
                     </div>
                 </div>
             </div>

@@ -4,64 +4,72 @@ import { Activity, ShieldCheck, Zap, ArrowRight, CornerDownRight } from "lucide-
 
 export default function Hero() {
     return (
-        <section className="relative min-h-screen flex items-center overflow-hidden bg-black pt-20">
-            {/* Background with Overlays */}
+        <section className="relative min-h-screen flex items-center overflow-hidden bg-slate-950 pt-20">
+
+            {/* Precision Background Layer */}
             <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 bg-slate-950"></div> {/* Core Solid Backup */}
                 <img
                     src="https://images.unsplash.com/photo-1629236261599-52e850f00f13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-                    alt="Technical Diving Red Sea"
-                    className="w-full h-full object-cover opacity-40 animate-in fade-in duration-1000"
+                    alt="Technical Diving Scene"
+                    className="w-full h-full object-cover opacity-20 pointer-events-none"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
-                {/* Digital Grid Overlay */}
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(var(--cyber-cyan)_1px,transparent_1px)] [background-size:40px_40px]"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950"></div>
+                <div className="absolute inset-0 hud-grid opacity-30"></div>
             </div>
 
             <div className="container relative z-10">
-                <div className="max-w-4xl">
-                    {/* Status Badge */}
-                    <div className="inline-flex items-center gap-3 px-4 py-2 border border-cyan-400/30 bg-cyan-400/5 mb-8 animate-in fade-in slide-in-from-left-4 duration-500">
-                        <div className="status-glow"></div>
-                        <span className="font-mono text-[10px] font-black tracking-[0.3em] text-cyan-400">PROTOCOL_V3.9_ACTIVE</span>
+                <div className="max-w-4xl space-y-12">
+
+                    {/* Module Indicator */}
+                    <div className="inline-flex items-center gap-4 px-5 py-2 bg-slate-900 border border-white/5 animate-in fade-in slide-in-from-left-8 duration-500">
+                        <div className="status-pip animate-pulse"></div>
+                        <span className="text-tech">System_Protocol_V4.1 // LIVE_FEED</span>
                     </div>
 
-                    <h1 className="text-6xl md:text-8xl font-black text-white leading-none mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                        DIVE<br />
-                        <span className="text-transparent border-t-2 border-b-2 border-cyan-400 pb-2" style={{ WebkitTextStroke: '1px var(--cyber-cyan)' }}>DEEPER.</span>
-                    </h1>
-
-                    <div className="flex gap-4 items-start mb-12 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-                        <CornerDownRight className="text-cyan-400 mt-1 shrink-0" size={32} />
-                        <p className="text-lg md:text-xl text-slate-400 font-mono leading-relaxed max-w-xl">
-                            High-performance base for technical divers and digital nomads.
-                            <span className="text-white block mt-2 font-black uppercase tracking-tight">Location: Lighthouse_Node // Dahab</span>
-                        </p>
+                    <div className="space-y-4">
+                        <h1 className="text-7xl md:text-[10rem] font-black text-white leading-[0.85] tracking-tighter animate-in fade-in slide-in-from-bottom-8 duration-700">
+                            THE DIGITAL<br />
+                            <span className="text-transparent" style={{ WebkitTextStroke: '2px var(--cyan-400)' }}>DIVER.</span>
+                        </h1>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-6 animate-in fade-in slide-in-from-bottom-12 duration-1200">
-                        <button className="btn-tech px-10 py-5 text-lg">
-                            INITIALIZE_BOOKING <ArrowRight size={20} />
-                        </button>
-                        <div className="flex items-center gap-6 px-4 bg-white/5 border border-white/5">
-                            <div className="flex -space-x-2">
-                                {[1, 2, 3].map(i => (
-                                    <div key={i} className="w-8 h-8 rounded-full border-2 border-black bg-slate-800 flex items-center justify-center">
-                                        <Activity size={12} className="text-cyan-400" />
-                                    </div>
-                                ))}
+                    <div className="flex flex-col md:flex-row items-start md:items-center gap-12 animate-in fade-in slide-in-from-bottom-12 duration-1000">
+                        <div className="flex gap-4 items-start max-w-lg">
+                            <CornerDownRight className="text-cyan-400 shrink-0 mt-1" size={24} />
+                            <p className="text-lg text-slate-300 font-medium leading-relaxed">
+                                High-performance base for tech explorers and nomadic divers. Located in the heart of Dahab's Lighthouse Node.
+                            </p>
+                        </div>
+
+                        <div className="flex items-center gap-6 px-10 py-6 bg-white/2 border-l border-cyan-400/30">
+                            <div className="space-y-1">
+                                <p className="text-tech opacity-40">Load_Cap</p>
+                                <p className="text-3xl font-black text-white font-mono">16</p>
                             </div>
-                            <div className="font-mono text-[10px] font-bold">
-                                <p className="text-white">16_BEDS_ONLINE</p>
-                                <p className="text-cyan-400">READY_FOR_GUESTS</p>
+                            <div className="w-px h-8 bg-white/5"></div>
+                            <div className="space-y-1">
+                                <p className="text-tech opacity-40">Stability</p>
+                                <p className="text-lg font-black text-cyan-400 font-mono">100%</p>
                             </div>
                         </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-6 pt-4 animate-in fade-in slide-in-from-bottom-16 duration-1200">
+                        <button className="btn-pro text-lg px-12 py-6">
+                            INITIALIZE_RESERVATION <ArrowRight size={20} />
+                        </button>
+                        <button className="btn-outline">
+                            EXPLORE_UNITS.SH
+                        </button>
                     </div>
                 </div>
             </div>
 
-            {/* Side Decorative Elements */}
-            <div className="absolute right-0 bottom-20 hidden lg:block rotate-90 origin-right">
-                <p className="font-mono text-[10px] text-cyan-400/20 tracking-[1em] uppercase">SYSTEM_STABILITY_CONNECTED_100%</p>
+            {/* Vertical Status Line */}
+            <div className="absolute right-12 bottom-12 hidden lg:flex flex-col items-end gap-4 opacity-20">
+                <span className="text-tech rotate-90 origin-right transition-all">SYSTEM_CONNECTED_TRUE</span>
+                <div className="w-px h-24 bg-white/20"></div>
             </div>
         </section>
     );
