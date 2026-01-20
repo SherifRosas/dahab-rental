@@ -8,9 +8,9 @@ export default function Hero() {
             {/* Background with Overlays */}
             <div className="absolute inset-0 z-0">
                 <img
-                    src="https://images.unsplash.com/photo-1544551763-47a0159f9234?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-                    alt="Red Sea Technical Diving"
-                    className="w-full h-full object-cover opacity-40"
+                    src="https://images.unsplash.com/photo-1629236261599-52e850f00f13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                    alt="Technical Diving Red Sea"
+                    className="w-full h-full object-cover opacity-40 animate-in fade-in duration-1000"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
                 {/* Digital Grid Overlay */}
