@@ -38,6 +38,7 @@ export default function ChatWidget() {
             {!isOpen && (
                 <button
                     onClick={() => setIsOpen(true)}
+                    title="Open Chat Terminal"
                     className="w-16 h-16 bg-cyan-400 text-slate-950 flex items-center justify-center shadow-[0_0_40px_rgba(34,211,238,0.3)] hover:scale-105 transition-all"
                 >
                     <Terminal size={28} />
@@ -45,7 +46,7 @@ export default function ChatWidget() {
             )}
 
             {isOpen && (
-                <div className="w-[380px] sm:w-[500px] card-tech bg-slate-900 shadow-2xl flex flex-col animate-in zoom-in-95 duration-200">
+                <div className="w-[380px] sm-[500px] card-tech bg-slate-900 shadow-2xl flex flex-col animate-in zoom-in-95 duration-200">
 
                     {/* Dashboard Hub Header */}
                     <div className="p-5 border-b border-white/5 bg-slate-950/50 flex items-center justify-between">
@@ -62,8 +63,8 @@ export default function ChatWidget() {
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
-                            <button className="text-slate-500 hover:text-white transition-colors"><Maximize2 size={16} /></button>
-                            <button onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-white transition-colors"><X size={20} /></button>
+                            <button title="Maximize Console" className="text-slate-500 hover:text-white transition-colors"><Maximize2 size={16} /></button>
+                            <button title="Close Terminal" onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-white transition-colors"><X size={20} /></button>
                         </div>
                     </div>
 
@@ -72,8 +73,8 @@ export default function ChatWidget() {
                         {messages.map((msg) => (
                             <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                                 <div className={`max-w-[85%] p-5 border font-mono text-[11px] leading-relaxed relative ${msg.role === "user"
-                                        ? "bg-cyan-400/5 border-cyan-400/20 text-cyan-400"
-                                        : "bg-slate-800/50 border-white/5 text-slate-300"
+                                    ? "bg-cyan-400/5 border-cyan-400/20 text-cyan-400"
+                                    : "bg-slate-800/50 border-white/5 text-slate-300"
                                     }`}>
                                     <div className={`absolute top-0 ${msg.role === "user" ? 'right-4' : 'left-4'} px-2 bg-slate-900 -translate-y-1/2 text-[8px] font-black text-slate-600`}>
                                         {msg.role === "user" ? 'GUEST_INPUT' : 'SYSLOG_READOUT'}
@@ -97,6 +98,7 @@ export default function ChatWidget() {
                             />
                             <button
                                 onClick={handleSend}
+                                title="Send Command"
                                 className="w-14 h-14 bg-cyan-400 text-slate-950 flex items-center justify-center hover:bg-white transition-all shrink-0"
                             >
                                 <Send size={20} />

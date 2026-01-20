@@ -26,7 +26,7 @@ export default function RoomsSection() {
                         title="Shared Pod"
                         price={PRICING_RULES.perDay.sharedBed}
                         capacity={1}
-                        image="https://images.unsplash.com/photo-1555854817-5b2260d1bd63?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        image="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&q=80&w=800"
                         description="Optimal social node with secure locker and personal terminal light. Solo diver priority."
                     />
                     <RoomCard

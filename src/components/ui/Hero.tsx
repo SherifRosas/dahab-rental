@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, ShieldCheck, Zap, ArrowRight, CornerDownRight } from "lucide-react";
+import { ArrowRight, CornerDownRight } from "lucide-react";
 
 export default function Hero() {
     return (
@@ -10,9 +10,9 @@ export default function Hero() {
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-slate-950"></div> {/* Core Solid Backup */}
                 <img
-                    src="https://images.unsplash.com/photo-1629236261599-52e850f00f13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-                    alt="Technical Diving Scene"
-                    className="w-full h-full object-cover opacity-20 pointer-events-none"
+                    src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=1920"
+                    alt="Technical Diving Depth"
+                    className="w-full h-full object-cover opacity-30 pointer-events-none"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950"></div>
                 <div className="absolute inset-0 hud-grid opacity-30"></div>
@@ -38,7 +38,7 @@ export default function Hero() {
                         <div className="flex gap-4 items-start max-w-lg">
                             <CornerDownRight className="text-cyan-400 shrink-0 mt-1" size={24} />
                             <p className="text-lg text-slate-300 font-medium leading-relaxed">
-                                High-performance base for tech explorers and nomadic divers. Located in the heart of Dahab's Lighthouse Node.
+                                Strategic base for tech explorers and nomadic divers. Located in the heart of Dahab&apos;s Lighthouse Node.
                             </p>
                         </div>
 
