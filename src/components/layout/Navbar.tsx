@@ -24,14 +24,14 @@ export default function Navbar() {
                 <div className="glass-v2 rounded-full px-6 py-4 flex items-center justify-between border-white/30">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
-                        <div className="bg-[var(--color-sea-blue)] p-2 rounded-xl group-hover:rotate-12 transition-transform shadow-lg">
+                        <div className="bg-[var(--color-sea-blue)] p-2 rounded-xl group-hover:rotate-12 transition-transform shadow-lg shrink-0">
                             <Waves className="text-white" size={24} />
                         </div>
                         <div className="flex flex-col leading-none">
-                            <span className="text-lg font-black tracking-tighter text-[var(--color-sea-deep)]">
+                            <span className="text-xl font-black tracking-tighter text-[var(--color-sea-deep)] flex items-center">
                                 DAHAB<span className="text-[var(--color-sand-gold)]">RENTAL</span>
                             </span>
-                            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">Red Sea Base</span>
+                            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Red Sea Base</span>
                         </div>
                     </Link>
 
